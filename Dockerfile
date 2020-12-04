@@ -9,5 +9,7 @@ RUN pip3 --no-cache-dir install -r requirements.txt
 
 EXPOSE 5000
 
+USER 1001
+
 ENTRYPOINT ["python3"]
 CMD ["helloworld.py"]
