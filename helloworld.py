@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 @app.route('/')  # URL '/' to be handled by main() route handler
 def main():
-    consumer = KafkaConsumer('JSONtopic', bootstrap_servers=['db-events-kafka-bootstrap:9092'],
+    consumer = KafkaConsumer('outbox.Album.events', bootstrap_servers=['db-events-kafka-bootstrap:9092'],
                              value_deserializer=lambda m: json.loads(m.decode('utf-8')))
 
     # Read data from kafka
