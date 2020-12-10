@@ -10,6 +10,7 @@ def main():
     consumer = KafkaConsumer(
         'outbox.Album.events',
         bootstrap_servers=['db-events-kafka-bootstrap:9092'],
+        api_version=(0, 10),
         value_deserializer=lambda x: loads(x.decode('utf-8'))
     )
 
