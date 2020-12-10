@@ -1,5 +1,4 @@
-import json
-# import sys
+from json import loads
 from flask import Flask
 from kafka import KafkaConsumer
 
@@ -8,19 +7,19 @@ app = Flask(__name__)
 
 @app.route('/')  # URL '/' to be handled by main() route handler
 def main():
-    consumer = KafkaConsumer('outbox.Album.events', bootstrap_servers=['localhost:9092'],
-                             value_deserializer=lambda m: json.loads(m.decode('utf-8')))
+    consumer = KafkaConsumer(
+        'outbox.Album.events',
+        bootstrap_servers=['db-events-kafka-bootstrap:9092'],
+        value_deserializer=lambda x: loads(x.decode('utf-8'))
+    )
 
     # Read data from kafka
-    return_value = None
     for message in consumer:
-        print("Consumer records:\n")
-        print(message)
-        return_value = message
+        value = message.value
+        print(value)
 
-    return str(return_value)
     # Terminate the script
-    # sys.exit()
+    return 'Success !'
 
 
 if __name__ == '__main__':  # Script executed directly?
